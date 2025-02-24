@@ -10,3 +10,4 @@
 ## Subir o projeto para executar os testes
 
 - Basta ter o docker e o docker-compose instalado na máquina, e na raiz do projeto executar docker-compose up. O projeto já esta configurado para criar o banco, as tabelas, executar o frontend e a api. Porta 3000 para o frontend, porta 5000 para a api/backend
+- Para o envio de e-mail pelo projeto será necessário configurar uma conta Gmail. Em api/ edite o arquivo .env adicionando um email em EMAIL_USER, e a senha em EMAIL_PASS.
