@@ -56,17 +56,6 @@ const Posts = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4 text-center">Lista de Posts</h2>
-
-      {/* Botão para criar post */}
-      <button
-        className="btn btn-primary bottom-3 end-3"
-        data-bs-toggle="modal"
-        data-bs-target="#createPostModal"
-      >
-        + Criar Post
-      </button>
-
       {/* Modal para criar um novo post */}
       <div className="modal fade" id="createPostModal" tabIndex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -113,32 +102,42 @@ const Posts = () => {
       </div>
 
       {/* Lista de posts */}
-      <div className="row mt-5">
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id} className="col-md-6 col-lg-4 mb-4">
-              <div className="card shadow border-0 rounded-3">
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-8 col-lg-8">
+          <button
+            className="btn btn-primary bottom-3 end-3 w-100 mb-5"
+            data-bs-toggle="modal"
+            data-bs-target="#createPostModal"
+          >
+            + Criar Post
+          </button>
+
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <div key={post.id} className="card shadow border-0 rounded-3 mb-4">
                 {post.image_url && (
                   <img
                     src={url_uploads + post.image_url}
                     className="card-img-top"
                     alt={post.title}
-                    style={{ height: "200px", objectFit: "cover" }}
+                    style={{ height: "250px", objectFit: "cover" }}
                   />
                 )}
                 <div className="card-body">
-                  <h5 className="card-title title">{post.title}</h5>
+                  <h5 className="card-title">{post.title}</h5>
                   <p className="card-text text-muted description">{post.description}</p>
-                  <Link className="btn btn-primary w-100" to={`/post/${post.id}`} >Ver mais</Link>
+                  <Link className="btn btn-outline-primary w-100" to={`/post/${post.id}`}>
+                    Ver mais
+                  </Link>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="text-center">
+              <p className="lead">Nenhum post disponível.</p>
             </div>
-          ))
-        ) : (
-          <div className="col-12 text-center">
-            <p className="lead">Nenhum post disponível.</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

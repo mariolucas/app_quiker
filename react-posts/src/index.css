@@ -25,5 +25,6 @@
 }
 
 .titlePostDetalhe {
-  max-width: 85%;
+  font-size: 40px;
+  line-height: 35px;
 }

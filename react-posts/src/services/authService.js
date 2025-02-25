@@ -1,4 +1,5 @@
 import api from "./api";
+import { jwtDecode } from 'jwt-decode';
 
 // Registrar usuário
 export const register = async (userData) => {
@@ -18,7 +19,7 @@ export const login = async (credentials) => {
     
     if (response.data.success) {
       localStorage.setItem("token", response.data.user.token); // Salva o token
-      localStorage.setItem("userId", response.data.user.id); // Salva o token
+      localStorage.setItem("userId", response.data.user.id); // Salva o id do usuário
     }
 
     return response.data;
@@ -29,7 +30,21 @@ export const login = async (credentials) => {
 
 // Verifica se o usuário está logado
 export const isAuthenticated = () => {
-  return !!localStorage.getItem("token"); // Retorna true se o token existir
+  const token = localStorage.getItem("token");
+  
+  try {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000; 
+
+    if (decodedToken.exp < currentTime) {
+      logout();
+      return false; 
+    }
+    return true; 
+  } catch (error) {
+    logout();
+    return false;
+  }
 };
 
 // Logout do usuário

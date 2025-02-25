@@ -81,7 +81,7 @@ class PostController {
         const { post_id } = req.params;
         const user_id = req.user.id;
 
-        const post = await Post.findById(post_id);
+        const post = await Post.findById(post_id, user_id);
         if (!post) {
             return res.status(404).json({ success: false, message: "Post não encontrado." });
         }
@@ -105,13 +105,14 @@ class PostController {
         res.json({ success: true, message: "Você não curtiu este post!" });
     }
 
-    async likeStatusPost(req, res) {
-        const { post_id } = req.body;
+    async likeStatus(req, res) {
+        const post_id= req.params.post_id;
         const user_id = req.user.id;
-        console.log( user_id, post_id );
-        let data = await Post.likeStatusPost(user_id, post_id);
-        console.log(data);
-        res.json({ success: true, liked: true, unlike: false });
+        let data = await Post.likeStatus(user_id, post_id);
+
+        data = JSON.parse( data[0].status);
+        res.json({ success: true, data: data });
+        
     }
 
     

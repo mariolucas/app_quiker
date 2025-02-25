@@ -41,10 +41,10 @@ router.get('/posts', authMiddleware, PostController.getAllPosts);
 router.post("/posts", authMiddleware, upload.single("image"), PostController.createPost);
 router.put("/posts/edit", authMiddleware, upload.single("image"), PostController.editPost);
 router.delete("/posts/delete", authMiddleware, PostController.deletePost);
-router.get("/posts/:post_id", authMiddleware, PostController.getPost);
 router.post("/posts/like", authMiddleware, PostController.likePost);
 router.post("/posts/unlike", authMiddleware, PostController.unlikePost);
-
+router.get("/posts/:post_id/like-status", authMiddleware, PostController.likeStatus);
+router.get("/posts/:post_id", authMiddleware, PostController.getPost);
 
 
 // Rotas Comenários

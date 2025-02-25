@@ -7,7 +7,11 @@ export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(isAuthenticated());
 
   useEffect(() => {
-    setIsAuth(isAuthenticated());
+    const checkAuth = () => {
+      setIsAuth(isAuthenticated());
+    };
+
+    checkAuth();
   }, []);
 
   const handleLogout = () => {

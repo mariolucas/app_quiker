@@ -108,3 +108,18 @@ export const unlikePost = async (postId) => {
     return { success: false, message: 'Erro ao descurtir o post' };
   }
 };
+
+export const getLikeStatus = async (postId) => {
+  try {
+    const response = await api.get(`/posts/${postId}/like-status`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`, 
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao obter status de like', error);
+    return { success: false, message: 'Erro ao obter status de like' };
+  }
+};

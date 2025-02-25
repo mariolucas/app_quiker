@@ -1,11 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { likePost, unlikePost } from '../services/postService';
 
-const PostActions = ({ postId }) => {
-  const [liked, setLiked] = useState(false); 
-  const [unliked, setUnliked] = useState(false); 
+const PostActions = ({ postId, initialLikeStatus }) => {
+  const [liked, setLiked] = useState(initialLikeStatus.liked); 
+  const [unliked, setUnliked] = useState(initialLikeStatus.unliked);
   
+  useEffect(() => {
+    setLiked(initialLikeStatus.liked);
+    setUnliked(initialLikeStatus.unliked);
+  }, [initialLikeStatus]);
+
   const handleLike = async () => {
     const response = await likePost(postId);
     if (response.success) {
@@ -29,7 +33,7 @@ const PostActions = ({ postId }) => {
            style={{
             cursor: 'pointer',
             color: liked ? '#0dcb0d' : '#bfbfbf',
-            fontSize: '25px'
+            fontSize: '20px'
           }}></i>
       </div>
 
@@ -38,7 +42,7 @@ const PostActions = ({ postId }) => {
            style={{
             cursor: 'pointer',
             color: unliked ? 'red' : '#bfbfbf',
-            fontSize: '25px',
+            fontSize: '20px',
             marginLeft: '10px'
           }}></i>
       </div>

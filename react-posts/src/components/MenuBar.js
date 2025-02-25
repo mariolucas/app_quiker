@@ -11,22 +11,19 @@ const MenuBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
-        <Link className="navbar-brand" to="/posts">Posts</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+    <nav className="navbar navbar-light bg-light">
+      <div className="container d-flex justify-content-center">
+        <div className="col-12 d-flex justify-content-between align-items-center">
+          <Link className="navbar-brand" to="/posts">Posts</Link>
+          <ul className="navbar-nav d-flex flex-row gap-3">
             <li className="nav-item">
               <Link className="nav-link" to="/posts">Posts</Link>
             </li>
             <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
+              <button className="btn btn-link nav-link" onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
           </ul>
         </div>
       </div>

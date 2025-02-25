@@ -45,8 +45,21 @@ class Post {
         return knex("relacionamentos").insert({ user_id, post_id, type: "unlike" }).onConflict(["user_id", "post_id", "type"]).ignore();
     }
 
-    async likeStatusPost(user_id, post_id) {
-        return knex("relacionamentos").where({ user_id, post_id });
+    async likeStatus(user_id, post_id) {
+        const sql = `
+            SELECT 
+                CASE
+                    WHEN type = 'like' THEN '{ "liked": true, "unliked": false }'
+                    WHEN type = 'unlike' THEN '{ "liked": false, "unliked": true }'
+                    ELSE '{ "liked": false, "unliked": false }'
+                END as status
+            FROM relacionamentos
+            WHERE user_id = ? AND post_id = ? AND type <> 'view'
+            LIMIT 1
+        `;
+
+        let res = await knex.raw(sql, [user_id, post_id]);        
+        return res[0];
     }
 
     async getPostReport() {
