@@ -95,7 +95,7 @@ const PostDetail = () => {
     setShowModalDel(!showModalDel);
   };
 
-  if (loading) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Carregando...</span></div>;
+  // if (loading) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Carregando...</span></div>;
 
   return (
     <div className="container mt-5">

@@ -123,3 +123,18 @@ export const getLikeStatus = async (postId) => {
     return { success: false, message: 'Erro ao obter status de like' };
   }
 };
+
+export const getPostStats = async (postId) => {
+  try {
+    const response = await api.get(`/posts/${postId}/stats`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`, 
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar estatísticas do post:", error);
+    return { total_likes: 0, total_unlikes: 0, total_views: 0 };
+  }
+};

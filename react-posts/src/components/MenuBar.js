@@ -14,10 +14,16 @@ const MenuBar = () => {
     <nav className="navbar navbar-light bg-light">
       <div className="container d-flex justify-content-center">
         <div className="col-12 d-flex justify-content-between align-items-center">
-          <Link className="navbar-brand" to="/posts">Posts</Link>
+          <Link className="navbar-brand" to="/posts">Sistema de posts</Link>
           <ul className="navbar-nav d-flex flex-row gap-3">
             <li className="nav-item">
               <Link className="nav-link" to="/posts">Posts</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/profile">Perfil</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/report">Relatório</Link>
             </li>
             <li className="nav-item">
               <button className="btn btn-link nav-link" onClick={handleLogout}>

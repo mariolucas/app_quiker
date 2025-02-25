@@ -110,10 +110,47 @@ class PostController {
         const user_id = req.user.id;
         let data = await Post.likeStatus(user_id, post_id);
 
-        data = JSON.parse( data[0].status);
-        res.json({ success: true, data: data });
-        
+        if(data.length > 0){
+            data = JSON.parse( data[0].status);
+            res.json({ success: true, data: data });
+        } else {
+            res.json({ success: false });
+        }
     }
+
+    async stats(req, res) {
+        try {
+          const { post_id } = req.params;
+    
+          if (!post_id || isNaN(post_id)) {
+            return res.status(400).json({ error: "ID do post inválido" });
+          }
+    
+          const result = await Post.getPostStats(post_id);
+    
+          if (!result[0] || result[0].length === 0) {
+            return res.json({
+              post_id,
+              total_likes: 0,
+              total_unlikes: 0,
+              total_views: 0
+            });
+          }
+    
+          const stats = result[0][0];
+    
+          return res.json({
+            post_id: stats.post_id,
+            total_likes: stats.total_likes || 0,
+            total_unlikes: stats.total_unlikes || 0,
+            total_views: stats.total_views || 0
+          });
+    
+        } catch (error) {
+          console.error("Erro ao buscar estatísticas do post:", error);
+          return res.status(500).json({ error: "Erro ao buscar estatísticas" });
+        }
+      }
 
     
 }

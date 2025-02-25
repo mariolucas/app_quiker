@@ -7,6 +7,9 @@ import PrivateRoute from "./PrivateRoute";
 import Redirect from "../views/Redirect";
 import MenuBar from "../components/MenuBar";
 import PostDetalhe from "../views/PostDetalhe.js";
+import Profile from "../views/Profile.js";
+import Report from "../views/Report";
+
 
 const AppRoutes = () => {
 
@@ -23,6 +26,8 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/posts" element={<PrivateRoute><Posts /></PrivateRoute>} />
         <Route path="/post/:post_id" element={<PrivateRoute><PostDetalhe /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/report" element={<PrivateRoute><Report /></PrivateRoute>} />
       </Routes>
     </>
   );

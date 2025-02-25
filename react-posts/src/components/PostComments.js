@@ -93,17 +93,11 @@ const PostComments = ({ postId, currentUserId, postOwnerId }) => {
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                   />
-                  <button
-                    className="btn btn-success me-2"
-                    onClick={() => handleEditComment(comment.id)}
-                  >
-                    <i className="fas fa-save me-1"></i> Salvar
+                  <button className="btn btn-sm">
+                    <i className="fas fa-save text-success" onClick={() => handleEditComment(comment.id)}></i>
                   </button>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => setEditingComment(null)}
-                  >
-                    <i className="fas fa-times me-1"></i> Cancelar
+                  <button className="btn btn-sm pe-0">
+                    <i className="fas fa-times text-secondary" onClick={() => setEditingComment(null)}></i>
                   </button>
                 </div>
               ) : (

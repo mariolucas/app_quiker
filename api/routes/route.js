@@ -44,6 +44,7 @@ router.delete("/posts/delete", authMiddleware, PostController.deletePost);
 router.post("/posts/like", authMiddleware, PostController.likePost);
 router.post("/posts/unlike", authMiddleware, PostController.unlikePost);
 router.get("/posts/:post_id/like-status", authMiddleware, PostController.likeStatus);
+router.get("/posts/:post_id/stats", authMiddleware, PostController.stats);
 router.get("/posts/:post_id", authMiddleware, PostController.getPost);
 
 

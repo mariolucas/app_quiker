@@ -65,39 +65,43 @@ class Post {
     async getPostReport() {
         return knex.raw(`
             SELECT 
-                p.id,
-                p.title,
-                COALESCE(comments.total_comments, 0) AS total_comments,
-                COALESCE(likes.total_likes, 0) AS total_likes,
-                COALESCE(unlikes.total_unlikes, 0) AS total_unlikes,
-                COALESCE(views.total_views, 0) AS total_views
+                p.id AS post_id,
+                p.title AS title,
+                COALESCE(c.total_comments, 0) AS total_comments,
+                COALESCE(r.total_likes, 0) AS total_likes,
+                COALESCE(r.total_unlikes, 0) AS total_unlikes,
+                COALESCE(r.total_views, 0) AS total_views
             FROM posts p
             LEFT JOIN (
-                SELECT post_id, COUNT(id) AS total_comments 
-                FROM comments 
+                SELECT post_id, COUNT(*) AS total_comments
+                FROM comments
                 GROUP BY post_id
-            ) comments ON p.id = comments.post_id
+            ) c ON p.id = c.post_id
             LEFT JOIN (
-                SELECT post_id, COUNT(id) AS total_likes 
-                FROM relacionamentos 
-                WHERE type = 'like' 
+                SELECT 
+                    post_id,
+                    COUNT(CASE WHEN type = 'like' THEN 1 END) AS total_likes,
+                    COUNT(CASE WHEN type = 'unlike' THEN 1 END) AS total_unlikes,
+                    COUNT(CASE WHEN type = 'view' THEN 1 END) AS total_views
+                FROM relacionamentos
                 GROUP BY post_id
-            ) likes ON p.id = likes.post_id
-            LEFT JOIN (
-                SELECT post_id, COUNT(id) AS total_unlikes 
-                FROM relacionamentos 
-                WHERE type = 'unlike' 
-                GROUP BY post_id
-            ) unlikes ON p.id = unlikes.post_id
-            LEFT JOIN (
-                SELECT post_id, COUNT(DISTINCT user_id) AS total_views 
-                FROM relacionamentos 
-                WHERE type = 'view' 
-                GROUP BY post_id
-            ) views ON p.id = views.post_id
-            ORDER BY p.id DESC;
+            ) r ON p.id = r.post_id;
         `);
     }
+
+    async getPostStats(post_id) {
+        const sql = `
+          SELECT post_id,
+            SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS total_likes,
+            SUM(CASE WHEN type = 'unlike' THEN 1 ELSE 0 END) AS total_unlikes,
+            SUM(CASE WHEN type = 'view' THEN 1 ELSE 0 END) AS total_views
+          FROM relacionamentos
+          WHERE post_id = ?
+          GROUP BY post_id
+        `;
+
+        return await knex.raw(sql,[post_id]);
+      }
 }
 
 module.exports = new Post();
